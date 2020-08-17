@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Task Manager</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Task Manager</h2>
+    <button id="btnAdd">Add Server</button>
+    <button id="btnRemove" disabled>Remove Server</button>
+    <script>
+      var minServer = 1,
+        currentServer = 1,
+        maxServer = 10;
+
+      var btnAdd = document.getElementById("btnAdd");
+      var btnRemove = document.getElementById("btnRemove");
+
+      // initial server count
+      console.log(currentServer);
+
+      btnAdd.addEventListener("click", addServer);
+      function addServer() {
+        btnRemove.removeAttribute("disabled");
+        if (currentServer < maxServer) {
+          currentServer++;
+          console.log(currentServer);
+          //   btnRemove.removeAttribute("disabled");
+          if (currentServer >= maxServer) {
+            btnAdd.setAttribute("disabled", true);
+          }
+        }
+      }
+
+      btnRemove.addEventListener("click", removeServer);
+      function removeServer() {
+        btnAdd.removeAttribute("disabled");
+        if (currentServer > minServer) {
+          currentServer--;
+          console.log(currentServer);
+          if (currentServer <= minServer) {
+            btnRemove.setAttribute("disabled", true);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
