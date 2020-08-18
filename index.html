@@ -5,25 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Task Manager</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
+      *{margin:0;padding:0;}
     </style>
   </head>
   <body>
     <h2>Task Manager</h2>
+
     <button id="btnAdd">Add Server</button>
     <button id="btnRemove" disabled>Remove Server</button>
+
+    <input id="inputTask" type="number" />
+    <button id="btnAddTask">Add Task</button>
+
+    <ul id="taskList"></ul>
+
     <script>
       var minServer = 1,
         currentServer = 1,
-        maxServer = 10;
+        maxServer = 10,
+        totalTask = 0;
 
       var btnAdd = document.getElementById("btnAdd");
       var btnRemove = document.getElementById("btnRemove");
 
-      // initial server count
+      var btnAddTask = document.getElementById("btnAddTask");
+      var inputTask = document.getElementById("inputTask");
+
+      var taskList = document.getElementById("taskList"); // initial server count
+
       console.log(currentServer);
 
       btnAdd.addEventListener("click", addServer);
@@ -31,8 +40,7 @@
         btnRemove.removeAttribute("disabled");
         if (currentServer < maxServer) {
           currentServer++;
-          console.log(currentServer);
-          //   btnRemove.removeAttribute("disabled");
+          console.log(currentServer); //   btnRemove.removeAttribute('disabled');
           if (currentServer >= maxServer) {
             btnAdd.setAttribute("disabled", true);
           }
@@ -48,6 +56,34 @@
           if (currentServer <= minServer) {
             btnRemove.setAttribute("disabled", true);
           }
+        }
+      }
+
+      btnAddTask.addEventListener("click", addTask);
+      function addTask() {
+        console.log("add task clicked");
+        var tasks = parseInt(inputTask.value);
+        totalTask += tasks;
+        var i;
+        for (i = 0; i < tasks; i++) {
+          var task = document.createElement("li");
+          var taskId = document.createAttribute("id");
+          taskId.value = "task" + i;
+          var taskText = document.createTextNode("waiting");
+
+          task.setAttributeNode(taskId);
+          task.appendChild(taskText);
+
+          var btnDelete = document.createElement("button");
+          var deleteClass = document.createAttribute("class");
+          deleteClass.value = "deleteTask";
+          var deleteText = document.createTextNode("delete");
+
+          btnDelete.setAttributeNode(deleteClass);
+          btnDelete.appendChild(deleteText);
+
+          task.appendChild(btnDelete);
+          taskList.appendChild(task);
         }
       }
     </script>
